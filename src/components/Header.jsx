@@ -5,6 +5,7 @@ import { green } from "@mui/material/colors"
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined"
 import SearchIcon from "@mui/icons-material/Search"
 import { Link, useNavigate } from "react-router-dom"
+import SlowMotionVideoOutlinedIcon from "@mui/icons-material/SlowMotionVideoOutlined"
 
 const Header = ({ headerRef }) => {
     const navigate = useNavigate()
@@ -24,7 +25,7 @@ const Header = ({ headerRef }) => {
 
                     <a href="/">
                         <Stack direction={"row"} alignItems={"center"} mr={10} spacing={1} sx={{ cursor: "pointer" }}>
-                            <YouTubeIcon color="error" fontSize="large" />
+                            <SlowMotionVideoOutlinedIcon color="error" fontSize="large" />
                             <Typography variant="h6" component="h1" sx={{ userSelect: "none" }}>
                                 PTube
                             </Typography>
@@ -37,6 +38,9 @@ const Header = ({ headerRef }) => {
                             value={searchValue}
                             onChange={(e) => {
                                 setSearchValue(e.target.value)
+                            }}
+                            onKeyUp={(e) => {
+                                if (e.key === "Enter") handleSearch()
                             }}
                         />
                         <Box className="flex items-center justify-center bg-neutral-500 px-5" onClick={handleSearch}>

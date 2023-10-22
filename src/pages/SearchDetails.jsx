@@ -19,6 +19,7 @@ const SearchDetails = () => {
         onSuccess: (data) => {
             console.log("🚀 ~ file: SearchDetails.jsx:17 ~ useQuery ~ data:", data)
             setSearchResults(data)
+            localStorage.setItem("searchResults", JSON.stringify(data))
         },
         onError: (err) => {
             console.log("🚀 ~ file: SearchDetails.jsx:17 ~ useMutation ~ err:", err)

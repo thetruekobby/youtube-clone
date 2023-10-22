@@ -9,15 +9,25 @@ import { Box, Card, CardMedia } from "@mui/material"
 import format from "date-fns/format"
 import { formatDistanceToNow, formatDistanceToNowStrict } from "date-fns"
 import { kFormatter } from "../utils"
+import { useNavigate } from "react-router-dom"
+import useSearchContext from "../context/SearchContext"
 
 const Home = () => {
+    const { searchResults } = useSearchContext()
     const [videos, setVideos] = useState([])
+    const navigate = useNavigate()
     // const {data} = useMutation()
-    const { isError, error, isLoading } = useQuery("suggested-videos", () => http.get("/search? relatedToVideoId=7ghhRHRP6t4&type=video"), {
-        onSuccess: (data) => {
-            setVideos(data)
-        },
-    })
+    const { isError, error, isLoading } = useQuery(
+        "suggested-videos",
+        () => http.get(`/search? relatedToVideoId=${searchResults?.[0]?.id?.videoId ?? "7ghhRHRP6t4"}&type=video`),
+        {
+            onSuccess: (data) => {
+                setVideos(data)
+            },
+            refetchOnWindowFocus: false,
+            refetchOnMount: false,
+        }
+    )
 
     const inputref = useRef()
 
@@ -31,10 +41,13 @@ const Home = () => {
                             elevation={0}
                             key={index}
                             sx={{ backgroundColor: "transparent", width: { xs: "100%", sm: "45%", md: "31%" }, color: "white", cursor: "pointer" }}
+                            onClick={() => {
+                                navigate(`/video/${video?.id?.videoId}`)
+                            }}
                         >
                             {/* <img src={video.snippet?.thumbnails?.default?.url} alt="thumbnail" /> */}
                             <CardMedia
-                                sx={{ /* height: 140, */ borderRadius: 1, aspectRatio: "16/9" }}
+                                sx={{ /* height: 140, */ borderRadius: 3, aspectRatio: "16/9" }}
                                 image={video.snippet?.thumbnails?.high?.url}
                                 alt="thumbnail"
                                 title="green iguana"
@@ -65,6 +78,7 @@ const Home = () => {
                             <div className="aspect-video rounded bg-gray-700"></div>
                             <Stack spacing={1} direction="row" mt={2}>
                                 <div className="rounded-full aspect-square w-bg-gray-700"></div>
+                                <div className=" roundebg-gray-700 last:w-3/4 h-3"></div>
                                 <div className=" roundebg-gray-700 last:w-3/4 h-3"></div>
                             </Stack>
                         </Card>

@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react"
 const SearchContext = createContext()
 
 export const SearchContextProvider = ({ children }) => {
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState(JSON.parse(localStorage.getItem("searchResults")) ?? [])
     return <SearchContext.Provider value={{ searchResults, setSearchResults }}>{children}</SearchContext.Provider>
 }
 
