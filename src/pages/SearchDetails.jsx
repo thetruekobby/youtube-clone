@@ -4,7 +4,7 @@ import { formatDistanceToNowStrict } from "date-fns"
 import http from "../utils/Axios"
 import { useEffect } from "react"
 import { useQuery } from "react-query"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import useSearchContext from "../context/SearchContext"
 // import { second } from "tailwindcss/colors"
 // console.log("🚀 ~ file: SearchDetails.jsx:10 ~ second:", second)
@@ -12,10 +12,11 @@ const videos = JSON.parse(localStorage.getItem("videos"))
 
 const SearchDetails = () => {
     const { searchResults, setSearchResults } = useSearchContext()
+    const navigate = useNavigate()
     const [searchParams] = useSearchParams()
     const q = searchParams.get("q")
 
-    useQuery(["search", q], () => http.get(`search?q=${q}`), {
+    const { isLoading } = useQuery(["search", q], () => http.get(`search?q=${q}`), {
         onSuccess: (data) => {
             console.log("🚀 ~ file: SearchDetails.jsx:17 ~ useQuery ~ data:", data)
             setSearchResults(data)
@@ -59,7 +60,14 @@ const SearchDetails = () => {
       ))} */}
             {searchResults &&
                 searchResults.map((video, index) => (
-                    <Card elevation={0} key={index} sx={{ backgroundColor: "transparent", color: "white", cursor: "pointer" }}>
+                    <Card
+                        elevation={0}
+                        key={index}
+                        sx={{ backgroundColor: "transparent", color: "white", cursor: "pointer" }}
+                        onClick={() => {
+                            navigate(`/video/${video?.id?.videoId}`)
+                        }}
+                    >
                         <Stack direction={{ sm: "row" }} spacing={2} sx={{ color: "gray" }}>
                             {/* <img src="./vite.svg" alt="" className="border" /> */}
                             <CardMedia
@@ -80,6 +88,28 @@ const SearchDetails = () => {
                                     <p>{video.snippet?.channelTitle}</p>
                                 </Stack>
                                 <p className="line-clamp-2">{video.snippet?.description}</p>
+                            </Stack>
+                        </Stack>
+                    </Card>
+                ))}
+            {/* skeleton */}
+            {isLoading &&
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((video, index) => (
+                    <Card elevation={0} key={index} sx={{ backgroundColor: "transparent", color: "white", cursor: "pointer" }} className="skeleton">
+                        <Stack direction={{ sm: "row" }} spacing={2} sx={{ color: "gray" }}>
+                            <div className="bg-gray-500/10 aspect-video rounded flex-1"></div>
+                            <Stack spacing={0.5} sx={{ flex: { xs: 1, md: 2 } }}>
+                                <p className="bg-gray-500/10 h-4 rounded"></p>
+                                <p className="bg-gray-500/10 h-4 rounded"></p>
+                                <p className="bg-gray-500/10 h-4 rounded"></p>
+
+                                <Stack direction={"row"} alignItems={"center"} spacing={2}>
+                                    <div className="rounded-full w-10 aspect-square bg-gray-500/10"></div>
+                                    <div className="flex-1">
+                                        <p className=" bg-gray-500/10 h-4 rounded mb-1"></p>
+                                        <p className=" bg-gray-500/10 h-4 rounded last:w-3/4"></p>
+                                    </div>
+                                </Stack>
                             </Stack>
                         </Stack>
                     </Card>

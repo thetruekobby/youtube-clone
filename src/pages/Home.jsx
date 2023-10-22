@@ -66,20 +66,22 @@ const Home = () => {
                             </Stack>
                         </Card>
                     ))}
+                {/* skeleton */}
                 {isLoading &&
                     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) => (
                         <Card
                             elevation={0}
                             key={index}
                             sx={{ backgroundColor: "transparent", width: { xs: "100%", sm: "45%", md: "31%" }, color: "white", cursor: "pointer" }}
+                            className="skeleton"
                         >
-                            {/* <img src={video.snippet?.thumbnails?.default?.url} alt="thumbnail" /> */}
-
-                            <div className="aspect-video rounded bg-gray-700"></div>
-                            <Stack spacing={1} direction="row" mt={2}>
-                                <div className="rounded-full aspect-square w-bg-gray-700"></div>
-                                <div className=" roundebg-gray-700 last:w-3/4 h-3"></div>
-                                <div className=" roundebg-gray-700 last:w-3/4 h-3"></div>
+                            <div className="rounded aspect-video bg-gray-500/10"></div>
+                            <Stack spacing={1} direction="row" mt={2} alignItems={"center"}>
+                                <div className="rounded-full aspect-square w-10 bg-gray-500/10"></div>
+                                <div className="last:w-3/4 flex-1">
+                                    <div className=" rounded bg-gray-500/10 last:w-3/4 h-3 mb-1"></div>
+                                    <div className=" rounded bg-gray-500/10  h-3 last:w-3/4"></div>
+                                </div>
                             </Stack>
                         </Card>
                     ))}
