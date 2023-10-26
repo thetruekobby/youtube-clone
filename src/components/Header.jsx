@@ -11,6 +11,7 @@ const Header = ({ headerRef }) => {
     const navigate = useNavigate()
     const [searchValue, setSearchValue] = useState("")
     const handleSearch = () => {
+        if (searchValue === "") return
         setSearchValue("")
         navigate(`/search?q=${searchValue}`)
     }
@@ -33,8 +34,9 @@ const Header = ({ headerRef }) => {
                     </a>
                     <Box sx={{ borderRadius: 999, border: "1px solid gray", overflow: "hidden", display: "flex", backgroundColor: "rgb(38 38 38)" }}>
                         <input
+                            placeholder="Search"
                             type="text"
-                            className="leading-10 outline-none text-gray-300 px-2 bg-inherit w-96"
+                            className="leading-10 outline-none text-gray-300 px-4 bg-inherit flex-[1_0_0%]"
                             value={searchValue}
                             onChange={(e) => {
                                 setSearchValue(e.target.value)
@@ -43,8 +45,8 @@ const Header = ({ headerRef }) => {
                                 if (e.key === "Enter") handleSearch()
                             }}
                         />
-                        <Box className="flex items-center justify-center bg-neutral-500 px-5" onClick={handleSearch}>
-                            <SearchIcon color="" />
+                        <Box className="flex items-center justify-center bg-neutral-500 w-16 cursor-pointer" onClick={handleSearch}>
+                            <SearchIcon />
                         </Box>
                     </Box>
                     {/* </Stack> */}
