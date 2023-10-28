@@ -14,13 +14,13 @@ const http = axios.create({
     },
 })
 
-http.interceptors.response.use(
-    (response) => {
-        return response.data.items
-    },
-    (error) => {
-        Promise.reject(error)
-    }
-)
+// http.interceptors.response.use(
+//     (response) => {
+//         return response.data.items
+//     },
+//     (error) => {
+//         Promise.reject(error)
+//     }
+// )
 
 export default http

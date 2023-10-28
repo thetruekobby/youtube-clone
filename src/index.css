@@ -4,9 +4,22 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #000000e5;
-  color: #fff;
-  --clr-gray-text: theme("colors.neutral.400");
+
+  --clr-background-primary: #fff;
+  --clr-background-secondary: #fff;
+  --clr-primary: #1a1a1a;
+  --clr-secondary: theme("colors.neutral.400");
+}
+
+
+#App {
+  background-color: var(--clr-background-primary);
+  color: var(--clr-primary);
+}
+#App.dark {
+  --clr-background-primary: #000000e5;
+  --clr-background-secondary: #141414;
+  --clr-primary: #fff;
 }
 
 .skeleton * {

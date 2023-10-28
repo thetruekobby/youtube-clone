@@ -14,26 +14,32 @@ import ErrorMessage from "../components/ErrorMessage"
 
 const Home = () => {
   const { searchResults } = useSearchContext()
+  const [error, setError] = useState("")
   //   const [videos, setVideos] = useState([])
   const navigate = useNavigate()
-  const {
-    isError,
-    error,
-    isLoading,
-    data: videos,
-  } = useQuery("suggested-videos", () => http.get(`/search?relatedToVideoId=${searchResults?.[0]?.id?.videoId ?? "7ghhRHRP6t4"}&type=video`), {
-    onError: (err) => {
-      console.log("🚀 ~ file: Home.jsx:24 ~ Home ~ err:", err)
-    },
-  })
+  const { isLoading, data } = useQuery(
+    "suggested-videos",
+    () => http.get(`/search?relatedToVideoId=${searchResults?.[0]?.id?.videoId ?? "7ghhRHRP6t4"}&type=video`),
+    {
+      onSuccess: (data) => {
+        if (data?.data?.items) return
+        setError(data.message)
+      },
+      onError: (err) => {
+        setError(err.message)
+      },
+      refetchOnWindowFocus:false,
+      // to be deleted
+      refetchOnMount:false
+    }
+  )
 
   return (
     <div className="">
-      {/* {isError && <div>{error.message}</div>} */}
-      {!videos && <ErrorMessage/>}
+      {error && !isLoading && <ErrorMessage message={error} />}
       <Stack flexWrap="wrap" direction={"row"} spacing={2} useFlexGap justifyContent="center">
-        {videos?.length !== 0 &&
-          videos?.map((video, index) => (
+        {data?.data?.items?.length !== 0 &&
+          data?.data?.items?.map((video, index) => (
             <Card
               elevation={0}
               key={index}
@@ -51,9 +57,9 @@ const Home = () => {
               />
               <Stack spacing={1} direction="row" mt={2}>
                 <Avatar alt={video.snippet?.title} src="/static/images/avatar/1.jpg" />
-                <Box className="text-[var(--clr-gray-text)]">
-                  <p className="font-bold text-white">
-                    {video.snippet?.title} onClick=
+                <Box className="text-[var(--clr-secondary)]">
+                  <p className="font-bold text-base text-[var(--clr-primary)]">
+                    {video.snippet?.title}
                     {() => {
                       navigate(`/video/${video?.id?.videoId}`)
                     }}
