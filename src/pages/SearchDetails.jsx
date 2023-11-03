@@ -41,7 +41,7 @@ const SearchDetails = () => {
       <Stack /* sx={{ border: "1px solid gray" }} */ spacing={5} useFlexGap mx={3}>
         {searchResults &&
           searchResults.map((video, index) => (
-            <Card elevation={0} key={index} sx={{ backgroundColor: "transparent", color: "white" }}>
+            <Card elevation={0} key={index} sx={{ backgroundColor: "transparent" }}>
               <Stack direction={{ sm: "row" }} spacing={2} sx={{ color: "var(--clr-secondary)" }}>
                 {/* <img src="./vite.svg" alt="" className="border" /> */}
                 <CardMedia
@@ -61,9 +61,9 @@ const SearchDetails = () => {
                   >
                     {video.snippet?.title}
                   </p>
-                  <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                  <Stack direction={"row"} alignItems={"center"} spacing={1} sx={{color:"var(--clr-secondary)"}}>
                     <p>{numFormatter(Math.floor(Math.random() * 10000) + 1)} views</p>
-                    <span className="rounded-full block w-1 aspect-square bg-neutral-600"></span>
+                    <span className="rounded-full block w-1 aspect-square bg-[var(--clr-secondary)]"></span>
                     <p>{video.snippet?.publishedAt && formatDistanceToNowStrict(new Date(video.snippet?.publishedAt), { addSuffix: true })}</p>
                   </Stack>
                   <Stack direction={"row"} alignItems={"center"} spacing={2}>
@@ -72,7 +72,7 @@ const SearchDetails = () => {
                       {video.snippet?.channelTitle}
                     </Link>
                   </Stack>
-                  <p className="line-clamp-2">{video.snippet?.description}</p>
+                  <p className="line-clamp-1">{video.snippet?.description}</p>
                 </Stack>
               </Stack>
             </Card>

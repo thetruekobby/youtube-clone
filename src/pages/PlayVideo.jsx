@@ -32,7 +32,6 @@ const PlayVideo = () => {
       setError(err.message)
     },
     refetchOnWindowFocus: false,
-    refetchOnMount: false,
     enabled: !!id,
   })
 
@@ -75,7 +74,7 @@ const PlayVideo = () => {
     <div className="">
       {error && !relatedVideosLoading && <ErrorMessage message={error} />}
 
-      <Stack direction={{ xs: "column", md: "row" }} spacing={3} alignItems="start">
+      <Stack direction={{ xs: "column", lg: "row" }} spacing={3} alignItems="start">
         <Box flex={2}>
           <iframe
             src={`https://www.youtube.com/embed/${id}?autoplay=1`}
@@ -94,7 +93,7 @@ const PlayVideo = () => {
             <Box>
               <Typography variant="body1">{data?.data?.items?.[0]?.snippet?.channelTitle}</Typography>
               {channel?.data?.items?.[0]?.statistics?.subscriberCount && (
-                <Typography variant="body2" className="text-gray-300">
+                <Typography variant="body2" className="text-[var(--clr-secondary)]]">
                   {numFormatter(channel?.data?.items?.[0]?.statistics?.subscriberCount)} subscribers
                 </Typography>
               )}
@@ -119,9 +118,9 @@ const PlayVideo = () => {
             )}
           </Stack>
           {/* video description */}
-          <Box className="rounded-lg bg-[var(--clr-secondary)] p-2">
-            {data?.data?.items?.[0]?.statistics?.viEwCount && (
-              <Typography className="">
+          <Box className="rounded-lg bg-[var(--clr-hover)] p-2">
+            {data?.data?.items?.[0]?.statistics?.viewCount && (
+              <Typography className="" sx={{marginBottom:2, color:"var(--clr-secondary)", fontWeight:500}}>
                 {numFormatter(data?.data?.items?.[0]?.statistics?.viewCount)} views&nbsp;&nbsp;&nbsp;
                 {data?.data?.items?.[0]?.snippet?.publishedAt &&
                   formatDistanceToNowStrict(new Date(data?.data?.items?.[0]?.snippet?.publishedAt), {
@@ -129,7 +128,7 @@ const PlayVideo = () => {
                   })}
               </Typography>
             )}
-            <Typography>{data?.data?.items?.[0]?.snippet?.description}</Typography>
+            <Typography variant="body2">{data?.data?.items?.[0]?.snippet?.description}</Typography>
           </Box>
           {/* COMMENTS */}
 
@@ -146,16 +145,16 @@ const PlayVideo = () => {
                       alt={comment?.snippet?.topLevelComment?.snippet?.authorDisplayName}
                     />
                     <Box>
-                      <Typography variant="body1">{comment?.snippet?.topLevelComment?.snippet?.authorDisplayName}</Typography>
-                      <Typography variant="body1">{comment?.snippet?.topLevelComment?.snippet?.textOriginal}</Typography>
-                      <Stack direction={"row"} alignItems={"center"} spacing={2}>
-                        <ThumbUpOutlinedIcon sx={{ color: "white" }} />
+                      <Typography variant="body2">{comment?.snippet?.topLevelComment?.snippet?.authorDisplayName}</Typography>
+                      <Typography variant="body2">{comment?.snippet?.topLevelComment?.snippet?.textOriginal}</Typography>
+                      <Stack direction={"row"} alignItems={"center"} spacing={1}>
+                        <ThumbUpOutlinedIcon sx={{ color: "var(--clr-primary)" }} fontSize="small" />
                         {comment?.snippet?.topLevelComment?.snippet?.likeCount != 0 && (
-                          <Typography variant="caption" className="-ml-[5px_!important]">
+                          <Typography variant="caption" sx={{translate:"-5px"}}>
                             {comment?.snippet?.topLevelComment?.snippet?.likeCount}
                           </Typography>
                         )}
-                        <ThumbDownOffAltOutlinedIcon sx={{ color: "white" }} />
+                        <ThumbDownOffAltOutlinedIcon sx={{ color: "var(--clr-primary)" }} fontSize="small" />
                       </Stack>
                     </Box>
                   </Stack>
@@ -197,7 +196,7 @@ const PlayVideo = () => {
                   <img src={video.snippet?.thumbnails?.high?.url} alt="" className="w-full rounded-lg" />
                 </Box>
                 <Stack flex={{ xs: 2, md: 1 }}>
-                  <div className="line-clamp-2 font-bold text-white">{video.snippet?.title}</div>
+                  <div className="line-clamp-2 font-medium text-[var(--clr-primary)]">{video.snippet?.title}</div>
                   <div className="">{video.snippet?.channelTitle}</div>
                   <Stack direction={"row"} alignItems={"center"} spacing={0.5}>
                     <p>{numFormatter(Math.floor(Math.random() * 10000) + 1)} views</p>

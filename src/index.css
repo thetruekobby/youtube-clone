@@ -8,7 +8,9 @@
   --clr-background-primary: #fff;
   --clr-background-secondary: #fff;
   --clr-primary: #1a1a1a;
-  --clr-secondary: theme("colors.neutral.400");
+  --clr-secondary: theme("colors.gray.600");
+  --clr-hover: theme("colors.neutral.200");
+  
 }
 
 
@@ -19,7 +21,9 @@
 #App.dark {
   --clr-background-primary: #000000e5;
   --clr-background-secondary: #141414;
+  --clr-secondary: theme("colors.gray.300");
   --clr-primary: #fff;
+  --clr-hover: theme("colors.neutral.800");
 }
 
 .skeleton * {

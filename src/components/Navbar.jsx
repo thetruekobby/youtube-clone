@@ -16,7 +16,7 @@ const Navbar = ({ headerRef, sidebarRef }) => {
       >
         {navList.map((item, index) => (
           <div
-            className="nav-item flex p-2 capitalize gap-4 items-center border-neutral-600  cursor-pointer rounded-lg hover:bg-neutral-800"
+            className="nav-item flex p-2 capitalize gap-4 items-center border-neutral-600  cursor-pointer rounded-lg hover:bg-[var(--clr-hover)]"
             key={index}
           >
             <span className="ml-2">{item.icon}</span>
@@ -36,7 +36,7 @@ const Navbar = ({ headerRef, sidebarRef }) => {
             px={1}
             py={2}
             spacing={1}
-            className="capitalize items-center text-[0.6rem] border-neutral-600  cursor-pointer rounded-lg hover:bg-neutral-800"
+            className="capitalize items-center text-[0.6rem] border-neutral-600  cursor-pointer rounded-lg hover:bg-[var(--clr-hover)]"
             key={index}
           >
             <span className="">{item.icon}</span>
