@@ -26,11 +26,9 @@ const Home = () => {
         setError(data.message)
       },
       onError: (err) => {
-        setError(err.message)
+        setError(err.response?.data?.message ?? err.message)
       },
-      refetchOnWindowFocus:false,
-      // to be deleted
-      refetchOnMount:false
+      refetchOnWindowFocus: false,
     }
   )
 

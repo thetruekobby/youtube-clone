@@ -10,7 +10,7 @@ import { useThemeContext } from "./context/ThemeContext"
 function App() {
   const { theme } = useThemeContext()
   return (
-    <div id="App" className={theme}>
+    <div id="App" className={`${theme} overflow-x-hidden`}>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />

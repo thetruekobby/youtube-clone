@@ -11,7 +11,6 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined"
 import { AvatarSkeleton, TextSkeleton } from "../components/Skeletons"
 import ErrorMessage from "../components/ErrorMessage"
 
-
 const PlayVideo = () => {
   const [channelId, setChannelId] = useState()
   const [relatedVideos, setRelatedVideos] = useState([])
@@ -29,7 +28,7 @@ const PlayVideo = () => {
       }
     },
     onError: (err) => {
-      setError(err.message)
+      setError(err.response?.data?.message ?? err.message)
     },
     refetchOnWindowFocus: false,
     enabled: !!id,
@@ -45,9 +44,9 @@ const PlayVideo = () => {
       }
     },
     onError: (err) => {
-      setError(err.message)
+      setError(err.response?.data?.message ?? err.message)
     },
-
+    refetchOnWindowFocus: false,
     enabled: !!id,
   })
 
@@ -57,8 +56,9 @@ const PlayVideo = () => {
       if (!res?.data?.items) setError(res.message)
     },
     onError: (err) => {
-      setError(err.message)
+      setError(err.response?.data?.message ?? err.message)
     },
+    refetchOnWindowFocus: false,
     enabled: !!channelId,
   })
 
@@ -67,6 +67,7 @@ const PlayVideo = () => {
     ["comments", channelId],
     () => http.get(`/commentThreads?part=snippet&videoId=${id}&maxResults=30`),
     {
+      refetchOnWindowFocus: false,
       enabled: !!id,
     }
   )
@@ -120,7 +121,7 @@ const PlayVideo = () => {
           {/* video description */}
           <Box className="rounded-lg bg-[var(--clr-hover)] p-2">
             {data?.data?.items?.[0]?.statistics?.viewCount && (
-              <Typography className="" sx={{marginBottom:2, color:"var(--clr-secondary)", fontWeight:500}}>
+              <Typography className="" sx={{ marginBottom: 2, color: "var(--clr-secondary)", fontWeight: 500 }}>
                 {numFormatter(data?.data?.items?.[0]?.statistics?.viewCount)} views&nbsp;&nbsp;&nbsp;
                 {data?.data?.items?.[0]?.snippet?.publishedAt &&
                   formatDistanceToNowStrict(new Date(data?.data?.items?.[0]?.snippet?.publishedAt), {
@@ -133,9 +134,11 @@ const PlayVideo = () => {
           {/* COMMENTS */}
 
           <Box>
-            <Typography variant="h6" mt={3}>
-              {/* {numFormatter(data?.data?.items?.[0]?.statistics?.commentCount)} comments */}
-            </Typography>
+            {data?.data?.items?.[0]?.statistics?.commentCount && (
+              <Typography variant="h6" mt={3}>
+                {numFormatter(data?.data?.items?.[0]?.statistics?.commentCount)} comments
+              </Typography>
+            )}
             {comments?.data?.items &&
               comments?.data?.items.map((comment, index) => (
                 <Box key={index} mb={2} className=" ">
@@ -150,7 +153,7 @@ const PlayVideo = () => {
                       <Stack direction={"row"} alignItems={"center"} spacing={1}>
                         <ThumbUpOutlinedIcon sx={{ color: "var(--clr-primary)" }} fontSize="small" />
                         {comment?.snippet?.topLevelComment?.snippet?.likeCount != 0 && (
-                          <Typography variant="caption" sx={{translate:"-5px"}}>
+                          <Typography variant="caption" sx={{ translate: "-5px" }}>
                             {comment?.snippet?.topLevelComment?.snippet?.likeCount}
                           </Typography>
                         )}

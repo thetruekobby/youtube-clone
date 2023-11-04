@@ -10,7 +10,6 @@ import { useState } from "react"
 
 const SearchDetails = () => {
   const { searchResults, setSearchResults } = useSearchContext()
-  console.log("🚀 ~ file: SearchDetails.jsx:12 ~ SearchDetails ~ searchResults:", searchResults)
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const q = searchParams.get("q")
@@ -18,19 +17,21 @@ const SearchDetails = () => {
 
   const { isLoading } = useQuery(["search", q], () => http.get(`search?q=${q}`), {
     onSuccess: (data) => {
-      console.log("🚀 ~ file: SearchDetails.jsx:21 ~ const{isLoading}=useQuery ~ data:", data)
       if (data?.data?.items) {
         setSearchResults(data?.data?.items)
         localStorage.setItem("searchResults", JSON.stringify(data?.data?.items))
       } else {
+        setSearchResults([])
+        localStorage.removeItem("searchResults")
         setError(data.message)
       }
     },
     onError: (err) => {
-      setError(err.message)
+      setSearchResults([])
+      localStorage.removeItem("searchResults")
+      setError(err.response?.data?.message ?? err.message)
     },
     enabled: !!q,
-    refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
 
@@ -61,7 +62,7 @@ const SearchDetails = () => {
                   >
                     {video.snippet?.title}
                   </p>
-                  <Stack direction={"row"} alignItems={"center"} spacing={1} sx={{color:"var(--clr-secondary)"}}>
+                  <Stack direction={"row"} alignItems={"center"} spacing={1} sx={{ color: "var(--clr-secondary)" }}>
                     <p>{numFormatter(Math.floor(Math.random() * 10000) + 1)} views</p>
                     <span className="rounded-full block w-1 aspect-square bg-[var(--clr-secondary)]"></span>
                     <p>{video.snippet?.publishedAt && formatDistanceToNowStrict(new Date(video.snippet?.publishedAt), { addSuffix: true })}</p>

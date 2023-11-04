@@ -23,9 +23,9 @@ const Channel = () => {
         if (!res?.data?.items) setError(res.message)
       },
       onError: (err) => {
-        setError(err.message)
+        setError(err.response?.data?.message ?? err.message)
       },
-
+      refetchOnWindowFocus: false,
       enabled: !!id,
     }
   )
@@ -38,8 +38,9 @@ const Channel = () => {
         if (!res?.data?.items) setError(res.message)
       },
       onError: (err) => {
-        setError(err.message)
+        setError(err.response?.data?.message ?? err.message)
       },
+      refetchOnWindowFocus: false,
       enabled: !!id,
     }
   )

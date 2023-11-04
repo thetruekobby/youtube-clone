@@ -20,7 +20,7 @@
 }
 #App.dark {
   --clr-background-primary: #000000e5;
-  --clr-background-secondary: #141414;
+  --clr-background-secondary:#000000e5;
   --clr-secondary: theme("colors.gray.300");
   --clr-primary: #fff;
   --clr-hover: theme("colors.neutral.800");

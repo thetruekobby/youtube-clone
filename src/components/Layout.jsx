@@ -11,7 +11,7 @@ const Layout = () => {
         <div>
             <Header headerRef={headerRef} />
             <Navbar headerRef={headerRef} sidebarRef={sidebarRef} />
-            <Box className="mt-[var(--header-height,64px)] mr-10" sx={{ marginLeft: { xs: "80px", md: "208px" },paddingTop:5 }}>
+            <Box className="mt-[var(--header-height,64px)] mr-10 min-h-[calc(100vh_-_var(--header-height,64px))]" sx={{ marginLeft: { xs: "80px", md: "208px" },paddingTop:5 }}>
                 <Outlet />
             </Box>
         </div>

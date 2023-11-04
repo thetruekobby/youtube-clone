@@ -31,17 +31,18 @@ const Header = ({ headerRef }) => {
   }
 
   useEffect(() => {
-    document.documentElement.style.setProperty("--header-height", headerRef.current.offsetHeight + "px")
+    const setHeaderHeight = () => {
+      document.documentElement.style.setProperty("--header-height", headerRef.current.offsetHeight + "px")
+    }
+    window.addEventListener("resize", setHeaderHeight)
+
+    return () => {
+      window.removeEventListener("resize", setHeaderHeight)
+    }
   }, [])
   return (
-    // <div className="shadow fixed w-full top-0 z-10 bg-[var(--clr-background-primary)]">
-    <AppBar ref={headerRef} color="transparent" position="fixed" sx={{ background: "var(--clr-background-secondary)", boxShadow: "0px 0px gray" }}>
+    <AppBar ref={headerRef} color="transparent" position="fixed" elevation={0}>
       <Toolbar>
-        {/* <Stack ref={headerRef} className="border" direction="row" alignItems={`center`}> */}
-        {/* <IconButton>
-            <MenuOutlinedIcon fontSize="large" className="text-white" />
-          </IconButton> */}
-
         <a href="/">
           <Stack direction={"row"} alignItems={"center"} mr={10} spacing={1} sx={{ cursor: "pointer" }}>
             <SlowMotionVideoOutlinedIcon color="error" fontSize="large" />
@@ -50,7 +51,8 @@ const Header = ({ headerRef }) => {
             </Typography>
           </Stack>
         </a>
-        <Box sx={{ borderRadius: 999, border: "1px solid gray", overflow: "hidden", display: "flex", backgroundColor: "" }}>
+        {/* search box */}
+        <Box sx={{ borderRadius: 999, border: "1px solid gray", overflow: "hidden", display: "flex", marginRight: 5 }}>
           <input
             placeholder="Search"
             type="text"
