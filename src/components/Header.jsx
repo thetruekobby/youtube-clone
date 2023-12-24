@@ -41,7 +41,7 @@ const Header = ({ headerRef }) => {
     }
   }, [])
   return (
-    <AppBar ref={headerRef} color="transparent" position="fixed" elevation={0}>
+    <AppBar ref={headerRef}  sx={{backgroundColor: "var(--clr-background-secondary)"}} position="fixed" elevation={0}>
       <Toolbar>
         <a href="/">
           <Stack direction={"row"} alignItems={"center"} mr={10} spacing={1} sx={{ cursor: "pointer" }}>
