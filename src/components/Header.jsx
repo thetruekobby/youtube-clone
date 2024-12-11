@@ -41,10 +41,10 @@ const Header = ({ headerRef }) => {
     }
   }, [])
   return (
-    <AppBar ref={headerRef}  sx={{backgroundColor: "var(--clr-background-secondary)"}} position="fixed" elevation={0}>
-      <Toolbar>
+    <AppBar ref={headerRef} sx={{ backgroundColor: "var(--clr-background-secondary)" }} position="fixed" elevation={0}>
+      <div className={`flex justify-between items-center px-4 py-2 gap-3 " ${theme !== "dark" && "border-b shadow "}`}>
         <a href="/">
-          <Stack direction={"row"} alignItems={"center"} mr={10} spacing={1} sx={{ cursor: "pointer" }}>
+          <Stack direction={"row"} alignItems={"center"} spacing={1} sx={{ cursor: "pointer" }}>
             <SlowMotionVideoOutlinedIcon color="error" fontSize="large" />
             <Typography variant="h6" component="h1" sx={{ userSelect: "none", color: "var(--clr-primary)" }}>
               PTube
@@ -52,7 +52,7 @@ const Header = ({ headerRef }) => {
           </Stack>
         </a>
         {/* search box */}
-        <Box sx={{ borderRadius: 999, border: "1px solid gray", overflow: "hidden", display: "flex", marginRight: 5 }}>
+        <div className="border border-[var(--clr-foreground)] overflow-hidden rounded-full flex-1 flex max-w-[600px]">
           <input
             placeholder="Search"
             type="text"
@@ -66,18 +66,18 @@ const Header = ({ headerRef }) => {
             }}
           />
           <Box
-            className={`flex items-center justify-center ${theme === "dark" ? "bg-neutral-500" : "bg-neutral-200"} w-16 cursor-pointer`}
+            className={`flex items-center justify-center ${theme === "dark" ? "bg-neutral-500" : "bg-neutral-500"} w-16 cursor-pointer`}
             onClick={handleSearch}
           >
             <SearchIcon />
           </Box>
-        </Box>
+        </div>
         {theme === "dark" ? (
-          <LightModeIcon sx={{ color: "var(--clr-secondary)", cursor: "pointer", position: "absolute", right: "20px" }} onClick={changeTheme} />
+          <LightModeIcon sx={{ color: "var(--clr-secondary)", cursor: "pointer", position: "static", right: "20px" }} onClick={changeTheme} />
         ) : (
-          <DarkModeIcon sx={{ color: "var(--clr-secondary)", cursor: "pointer", position: "absolute", right: "20px" }} onClick={changeTheme} />
+          <DarkModeIcon sx={{ color: "var(--clr-secondary)", cursor: "pointer", position: "static", right: "20px" }} onClick={changeTheme} />
         )}
-      </Toolbar>
+      </div>
     </AppBar>
     // </div>
   )

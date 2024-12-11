@@ -8,8 +8,9 @@
   --clr-background-primary: #fff;
   --clr-background-secondary: #fff;
   --clr-primary: #1a1a1a;
-  --clr-secondary: theme("colors.gray.600");
+  --clr-secondary: theme("colors.gray.900");
   --clr-hover: theme("colors.neutral.200");
+  --clr-foreground: theme(colors.neutral.500)
   
 }
 
@@ -19,7 +20,8 @@
   color: var(--clr-primary);
 }
 #App.dark {
-  --clr-background-primary: #000000e5;
+  --clr-background-primary: #000000;
+  /* --clr-background-primary: #000000e5; */
   --clr-background-secondary:#000;
   --clr-secondary: theme("colors.gray.300");
   --clr-primary: #fff;

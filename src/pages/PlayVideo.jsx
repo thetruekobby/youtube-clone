@@ -10,11 +10,13 @@ import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutl
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined"
 import { AvatarSkeleton, TextSkeleton } from "../components/Skeletons"
 import ErrorMessage from "../components/ErrorMessage"
+import { ThumbDownOffAlt, ThumbUp } from "@mui/icons-material"
 
 const PlayVideo = () => {
   const [channelId, setChannelId] = useState()
   const [relatedVideos, setRelatedVideos] = useState([])
   const [error, setError] = useState("")
+  const [userLiked, setuserLiked] = useState(false)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -107,12 +109,17 @@ const PlayVideo = () => {
                 divider={<Divider orientation="vertical" flexItem />}
                 className="rounded-full bg-neutral-700 "
               >
-                <IconButton sx={{ px: 2, display: "flex", alignItems: "center", gap: 1 }}>
-                  <ThumbUpOutlinedIcon sx={{ color: "white" }} fontSize="small" />
+                <IconButton
+                  onClick={() => {
+                    setuserLiked(!userLiked)
+                  }}
+                  sx={{ px: 2, display: "flex", alignItems: "center", gap: 1, ":hover": { opacity: ".8" } }}
+                >
+                  {!userLiked ? <ThumbUpOutlinedIcon sx={{ color: "white" }} fontSize="small" /> : <ThumbUp sx={{ color: "white" }} />}
 
-                  <p className="text-base">{numFormatter(data?.data?.items?.[0]?.statistics?.likeCount)}</p>
+                  <p className="text-sm text-white">{numFormatter(data?.data?.items?.[0]?.statistics?.likeCount + (userLiked ? 1 : 0))}</p>
                 </IconButton>
-                <IconButton sx={{ px: 2 }}>
+                <IconButton sx={{ px: 2, ":hover": { opacity: ".8" } }}>
                   <ThumbDownOffAltOutlinedIcon sx={{ color: "white" }} fontSize="small" />
                 </IconButton>
               </Stack>
